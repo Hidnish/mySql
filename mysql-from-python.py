@@ -1,4 +1,5 @@
 import os 
+import datetime
 import pymysql
 
 # get username from cloud9 workspace
@@ -12,12 +13,12 @@ connection = pymysql.connect(host='localhost',
 
 
 try:
-    # run query
     with connection.cursor() as cursor:
-        sql = "select * from Artist;"
-        cursor.execute(sql)
-        result = cursor.fetchall()
-        print(result)
+        row = ("Bob", 21, "1990-06-02 23:04:56")
+        cursor.execute("INSERT INTO Friends VALUES (%s, %s, %s);", row)
+        connection.commit()
+        # Note that the above will still display a warning (not error) if the
+        # table already exists
 finally:
     # always close the connection 
     connection.close()
